@@ -1,7 +1,6 @@
-import fs from 'fs';
+import { getNumsInput } from './helpers';
 
-const input = fs.readFileSync('day1input.txt', 'utf-8').split('\n');
-const numList = input.map((item) => Number.parseInt(item));
+const numList = getNumsInput('day1');
 
 let numIncreases = 0;
 
