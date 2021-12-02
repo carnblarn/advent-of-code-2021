@@ -2,18 +2,22 @@ import { getStringsInput } from './helpers';
 
 const list = getStringsInput('day2');
 
+const day2Parsed = list.map<[string, number]>((item) => {
+    const [direction, amount] = item.split(' ');
+    return [direction, parseInt(amount)];
+});
+
 let depth = 0;
 let position = 0;
+let aim = 0;
 
-list.forEach((item) => {
-    const [direction, amountString] = item.split(' ');
-    const parsedAmount = parseInt(amountString);
+day2Parsed.forEach(([direction, ammount]) => {
     if (direction === 'forward') {
-        position += parsedAmount;
+        position += ammount;
     } else if (direction === 'down') {
-        depth += parsedAmount;
+        depth += ammount;
     } else if (direction === 'up') {
-        depth -= parsedAmount;
+        depth -= ammount;
     }
 });
 
@@ -22,18 +26,15 @@ console.log(depth * position);
 
 depth = 0;
 position = 0;
-let aim = 0;
 
-list.forEach((item) => {
-    const [direction, amountString] = item.split(' ');
-    const parsedAmount = parseInt(amountString);
+day2Parsed.forEach(([direction, ammount]) => {
     if (direction === 'forward') {
-        position += parsedAmount;
-        depth += aim * parsedAmount;
+        position += ammount;
+        depth += aim * ammount;
     } else if (direction === 'down') {
-        aim += parsedAmount;
+        aim += ammount;
     } else if (direction === 'up') {
-        aim -= parsedAmount;
+        aim -= ammount;
     }
 });
 
