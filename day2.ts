@@ -22,7 +22,7 @@ day2Parsed.forEach(([direction, ammount]) => {
 });
 
 // part 1
-console.log(depth * position);
+console.log('Part 1:', depth * position);
 
 depth = 0;
 position = 0;
@@ -39,4 +39,4 @@ day2Parsed.forEach(([direction, ammount]) => {
 });
 
 // part 2
-console.log(depth * position);
+console.log('Part 2:', depth * position);
