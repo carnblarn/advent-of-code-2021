@@ -23,8 +23,6 @@ const convertCoordinateToString = (coord: Coordinate) => {
     return `${coord.x},${coord.y}`;
 };
 
-const max = () => {};
-
 // ex: 482,709 -> 704,931
 const lines: { start: Coordinate; end: Coordinate }[] = list
     .split('\n')
@@ -39,65 +37,25 @@ const lines: { start: Coordinate; end: Coordinate }[] = list
 
 const grid: { [coordinate: string]: number } = {};
 
+const findSlope = (start: number, end: number) => {
+    if (start > end) {
+        return -1;
+    } else if (start < end) {
+        return 1;
+    } else {
+        return 0;
+    }
+};
+
 lines.forEach((line) => {
-    // a horizontal line
-    if (line.start.y === line.end.y) {
-        const start = line.start.x > line.end.x ? line.end : line.start;
-        const end = line.start.x > line.end.x ? line.start : line.end;
+    // this handles horizontal, vertical, diagonal lines
+    let currentX = line.start.x;
+    let currentY = line.start.y;
 
-        for (let i = start.x; i <= end.x; i++) {
-            const key = convertCoordinateToString({ x: i, y: line.start.y });
-            const existing = grid[key];
-            if (existing) {
-                grid[key] = existing + 1;
-            } else {
-                grid[key] = 1;
-            }
-        }
-    }
-    // a vertical line
-    // there are diagonals!
-    else if (line.start.x === line.end.x) {
-        const start = line.start.y > line.end.y ? line.end : line.start;
-        const end = line.start.y > line.end.y ? line.start : line.end;
+    let horizontalSlope = findSlope(line.start.x, line.end.x);
+    let verticalSlope = findSlope(line.start.y, line.end.y);
 
-        for (let i = start.y; i <= end.y; i++) {
-            const key = convertCoordinateToString({ x: line.start.x, y: i });
-
-            const existing = grid[key];
-            if (existing) {
-                grid[key] = existing + 1;
-            } else {
-                grid[key] = 1;
-            }
-        }
-    }
-    // comment out this section to get the answer to part 1
-    // diagononal lines
-    // realizing now that every type of line could be handled by this case
-    else {
-        let currentX = line.start.x;
-        let currentY = line.start.y;
-
-        let horizontalDirection = line.start.x < line.end.x ? 'right' : 'left';
-        let verticalDirection = line.start.y < line.end.y ? 'down' : 'up';
-
-        while (currentX !== line.end.x) {
-            const key = convertCoordinateToString({ x: currentX, y: currentY });
-
-            const existing = grid[key];
-            if (existing) {
-                grid[key] = existing + 1;
-            } else {
-                grid[key] = 1;
-            }
-
-            currentX =
-                horizontalDirection === 'right' ? currentX + 1 : currentX - 1;
-            currentY =
-                verticalDirection === 'down' ? currentY + 1 : currentY - 1;
-        }
-
+    while (currentX !== line.end.x || currentY !== line.end.y) {
         const key = convertCoordinateToString({ x: currentX, y: currentY });
 
         const existing = grid[key];
@@ -106,6 +64,19 @@ lines.forEach((line) => {
         } else {
             grid[key] = 1;
         }
+
+        currentX = currentX + horizontalSlope;
+        currentY = currentY + verticalSlope;
+    }
+
+    // adding in one more entry for the final point
+    const key = convertCoordinateToString({ x: currentX, y: currentY });
+
+    const existing = grid[key];
+    if (existing) {
+        grid[key] = existing + 1;
+    } else {
+        grid[key] = 1;
     }
 });
 
