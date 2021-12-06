@@ -88,6 +88,4 @@ Object.values(grid).forEach((value) => {
     }
 });
 
-console.log(grid);
-
 console.log(counter);
