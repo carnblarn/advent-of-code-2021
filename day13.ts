@@ -59,6 +59,8 @@ for (let i = 0; i < instructions.length; i++) {
             newDots.push(nextDot!);
         }
     });
+    // the instructions don't say it, but the folding line is always down the center
+    // which is why this works
     if (axis === 'x') {
         width = width - value - 1;
     } else if (axis === 'y') {
