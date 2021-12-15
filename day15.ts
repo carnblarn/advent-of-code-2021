@@ -130,7 +130,7 @@ while (lowestRiskNode) {
 
         if (newRisk < existingRisk) {
             riskLevels[neighborString] = newRisk;
-            queue.removeOne(({ id }) => id === neighborString);
+            // queue.removeOne(({ id }) => id === neighborString);
             queue.add({ id: neighborString, risk: newRisk });
         }
     });
