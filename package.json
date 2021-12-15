@@ -9,6 +9,7 @@
   "author": "carney",
   "license": "ISC",
   "dependencies": {
+    "fastpriorityqueue": "^0.7.1",
     "nodemon": "^2.0.15",
     "ts-node": "^10.4.0",
     "typescript": "^4.5.2"
